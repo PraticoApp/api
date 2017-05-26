@@ -1,0 +1,19 @@
+default: &default
+  adapter: postgresql
+  encoding: unicode
+  pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
+  host: localhost
+  username: <%= ENV['PRATICO_DATABASE_USERNAME'] %>
+  password: <%= ENV['PRATICO_DATABASE_PASSWORD'] %>
+
+development:
+  <<: *default
+  database: pratico_development
+
+test:
+  <<: *default
+  database: pratico_test
+
+production:
+  <<: *default
+  database: pratico_production

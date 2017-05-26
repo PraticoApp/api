@@ -1,0 +1,9 @@
+language: ruby
+rvm:
+  - 2.3.2
+before_install:
+  - gem update --system
+  - gem --version
+before_script:
+  - psql -c 'create database pratico_test;' -U postgres
+cache: bundler

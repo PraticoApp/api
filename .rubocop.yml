@@ -1,0 +1,6 @@
+Rails:
+  Enabled: true
+Style/NumericLiterals:
+  Enabled: false
+Style/Documentation:
+  Enabled: false
