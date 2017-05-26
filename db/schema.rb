@@ -10,7 +10,33 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 0) do
+ActiveRecord::Schema.define(version: 20170526151332) do
   # These are extensions that must be enabled in order to support this database
   enable_extension 'plpgsql'
+
+  create_table 'users', force: :cascade do |t|
+    t.string 'first_name', default: '', null: false
+    t.string 'last_name'
+    t.string 'email', default: '', null: false
+    t.string 'password_digest', default: '', null: false
+    t.string 'cpf', default: '', null: false
+    t.string 'phone', default: '', null: false
+    t.integer 'gender', default: 2, null: false
+    t.date 'birth_date', default: -> { "('now'::text)::date" }, null: false
+    t.string 'confirmation_token'
+    t.datetime 'confirmation_sent_at'
+    t.string 'reset_password_token'
+    t.datetime 'reset_password_sent_at'
+    t.string 'unconfirmed_email'
+    t.string 'authentication_token'
+    t.boolean 'active', default: false, null: false
+    t.datetime 'created_at', null: false
+    t.datetime 'updated_at', null: false
+    t.index ['authentication_token'], name: 'index_users_on_authentication_token', unique: true
+    t.index ['confirmation_token'], name: 'index_users_on_confirmation_token', unique: true
+    t.index ['cpf'], name: 'index_users_on_cpf', unique: true
+    t.index ['email'], name: 'index_users_on_email', unique: true
+    t.index ['phone'], name: 'index_users_on_phone', unique: true
+    t.index ['reset_password_token'], name: 'index_users_on_reset_password_token', unique: true
+  end
 end
