@@ -1,5 +1,6 @@
 source 'https://rubygems.org'
 
+gem 'bcrypt'
 gem 'figaro'
 gem 'pg', '~> 0.18'
 gem 'puma', '~> 3.7'
