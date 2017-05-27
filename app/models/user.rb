@@ -5,7 +5,7 @@ class User < ApplicationRecord
   has_secure_token :authentication_token
 
   validates :first_name, presence: true
-  validates :cpf, presence: true, uniqueness: true
+  validates :cpf, presence: true, uniqueness: true, length: { is: 11 }
   validates :email, presence: true, uniqueness: true
   validates :phone, presence: true, uniqueness: true
   validates :gender, presence: true
