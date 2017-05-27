@@ -4,6 +4,9 @@ class User < ApplicationRecord
   has_secure_password
   has_secure_token :authentication_token
 
+  has_many :competencies, dependent: :destroy
+  has_many :skills, through: :competencies
+
   validates :first_name, presence: true
   validates :cpf, presence: true, uniqueness: true, length: { is: 11 }
   validates :email, presence: true, uniqueness: true
