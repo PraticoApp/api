@@ -4,6 +4,7 @@ class User < ApplicationRecord
   has_secure_password
   has_secure_token :authentication_token
 
+  has_one :address, dependent: :destroy
   has_many :competencies, dependent: :destroy
   has_many :skills, through: :competencies
 
