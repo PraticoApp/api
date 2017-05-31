@@ -5,8 +5,7 @@ describe ApplicationController, type: :controller do
     let(:user) { create(:user) }
 
     controller do
-      def index
-      end
+      def index; end
     end
 
     describe '#authenticate_user' do
@@ -14,7 +13,7 @@ describe ApplicationController, type: :controller do
         it 'returns the valid user' do
           request.headers['Authorization'] = "Token token=#{user.authentication_token}"
 
-          expect(controller.authenticate_user).to eq (user)  
+          expect(controller.authenticate_user).to eq(user)
         end
       end
 
