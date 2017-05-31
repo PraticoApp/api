@@ -1,6 +1,7 @@
 module Api
   module V1
     class UsersController < ApplicationController
+      before_action :set_user, only: %i[destroy update]
       skip_before_action :authenticate_user, only: :create
 
       def create
@@ -14,21 +15,25 @@ module Api
       end
 
       def destroy
-        current_user.active = false
-        current_user.save
+        @user.active = false
+        @user.save
 
         head :ok
       end
 
       def update
-        if current_user.update(user_params)
-          render json: current_user, status: :ok
+        if @user.update(user_params)
+          render json: @user, status: :ok
         else
-          render json: current_user.errors, status: :unprocessable_entity
+          render json: @user.errors, status: :unprocessable_entity
         end
       end
 
       private
+
+      def set_user
+        @user = current_user
+      end
 
       def user_params
         params.require(:user).permit(
