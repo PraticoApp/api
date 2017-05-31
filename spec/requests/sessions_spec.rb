@@ -2,6 +2,7 @@ require 'rails_helper'
 
 RSpec.describe 'Sessions', type: :request do
   let(:user) { create(:user) }
+
   let(:valid_session_params) do
     {
       session: {
@@ -10,6 +11,7 @@ RSpec.describe 'Sessions', type: :request do
       }
     }
   end
+
   let(:invalid_session_params) do
     {
       session: {
@@ -27,7 +29,7 @@ RSpec.describe 'Sessions', type: :request do
         expect(response).to have_http_status(:ok)
       end
 
-      it 'renders the new user token' do
+      it 'returns the new user token' do
         post api_v1_login_path, params: valid_session_params
 
         user.reload
@@ -52,7 +54,7 @@ RSpec.describe 'Sessions', type: :request do
         expect(response).to have_http_status(:unauthorized)
       end
 
-      it 'renders bad credentials error' do
+      it 'returns bad credentials error' do
         post api_v1_login_path, params: invalid_session_params
 
         json = JSON.parse(response.body)
@@ -64,13 +66,15 @@ RSpec.describe 'Sessions', type: :request do
   describe 'DELETE destroy' do
     context 'with valid params' do
       it 'returns http status ok' do
-        delete api_v1_logout_path, headers: { 'Authorization': "Token token=#{user.authentication_token}" }
+        delete api_v1_logout_path,
+               headers: { Authorization: "Token token=#{user.authentication_token}" }
 
         expect(response).to have_http_status(:ok)
       end
 
       it 'returns empty body' do
-        delete api_v1_logout_path, headers: { 'Authorization': "Token token=#{user.authentication_token}" }
+        delete api_v1_logout_path,
+               headers: { Authorization: "Token token=#{user.authentication_token}" }
 
         expect(response.body).to eq('')
       end
@@ -78,7 +82,8 @@ RSpec.describe 'Sessions', type: :request do
       it 'generates a new user token' do
         old_authentication_token = user.authentication_token
 
-        delete api_v1_logout_path, headers: { 'Authorization': "Token token=#{user.authentication_token}" }
+        delete api_v1_logout_path,
+               headers: { Authorization: "Token token=#{user.authentication_token}" }
 
         user.reload
         expect(user.authentication_token).to_not eq(old_authentication_token)
@@ -92,7 +97,7 @@ RSpec.describe 'Sessions', type: :request do
         expect(response).to have_http_status(:unauthorized)
       end
 
-      it 'renders bad credentials error' do
+      it 'returns bad credentials error' do
         delete api_v1_logout_path
 
         json = JSON.parse(response.body)
